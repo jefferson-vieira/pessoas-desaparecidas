@@ -4,7 +4,7 @@ import { components } from '@/@types/api';
 
 import { fallbackInfo } from './utils';
 import { formatDateTime } from '@/utils/date-time';
-import Image from 'next/image';
+import ImageWithFallback from '@/components/ImageWithFallback';
 
 type Props = {
   person: components['schemas']['PessoaDTO'];
@@ -27,11 +27,12 @@ export default function PersonCard({ person }: Props) {
       <CardContent>
         <div className="relative">
           <div className="w-full pt-[100%]">
-            <Image
+            <ImageWithFallback
               alt={`Foto de ${nome}`}
               fill
               className="rounded-2xl object-cover"
               src={urlFoto}
+              fallback="/img/user-x.svg"
             />
           </div>
         </div>
