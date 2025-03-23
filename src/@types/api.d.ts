@@ -200,8 +200,8 @@ export type webhooks = Record<string, never>;
 export interface components {
   schemas: {
     Permissao: {
-      accessToken?: string;
-      refreshToken?: string;
+      accessToken: string;
+      refreshToken: string;
     };
     OcorrenciaInformacaoDTO: {
       /**
@@ -225,7 +225,7 @@ export interface components {
        * @description Tipo de logradouro, por exemplo: RUA, AVENIDA
        * @enum {string}
        */
-      tipoLogradouro?:
+      tipoLogradouro:
         | 'ALAMEDA'
         | 'ALTO'
         | 'AVENIDA'
@@ -250,34 +250,34 @@ export interface components {
        * @description Nome do logradouro
        * @example Rua das Flores
        */
-      logradouro?: string;
+      logradouro: string;
       /**
        * @description Número do endereço
        * @example 123
        */
-      numero?: string;
+      numero: string;
       /**
        * @description Complemento do endereço
        * @example Apartamento 304
        */
-      complemento?: string;
+      complemento: string;
       /**
        * @description Bairro onde o endereço se localiza
        * @example Jardim das Acácias
        */
-      bairro?: string;
+      bairro: string;
       /**
        * Format: int64
        * @description ID da cidade
        * @example 3
        */
-      cidadeId?: number;
+      cidadeId: number;
       /**
        * @description UF (Estado) do endereço
        * @example SP
        * @enum {string}
        */
-      uf?:
+      uf:
         | 'MT'
         | 'AC'
         | 'AL'
@@ -309,29 +309,29 @@ export interface components {
        * @description Ponto de referência do endereço
        * @example Próximo ao supermercado XYZ
        */
-      referencia?: string;
+      referencia: string;
       /**
        * Format: double
        * @description Latitude geográfica do endereço
        * @example -23.5645
        */
-      latitude?: number;
+      latitude: number;
       /**
        * Format: double
        * @description Longitude geográfica do endereço
        * @example -46.6543
        */
-      longitude?: number;
+      longitude: number;
       /**
        * @description CEP do endereço
        * @example 01234-567
        */
-      cep?: string;
+      cep: string;
       /**
        * @description Tipo de endereço, por exemplo: RESIDENCIAL, COMERCIAL
        * @enum {string}
        */
-      tipoEndereco?: 'RESIDENCIAL' | 'COMERCIAL' | 'OUTROS';
+      tipoEndereco: 'RESIDENCIAL' | 'COMERCIAL' | 'OUTROS';
     };
     EnderecoEletronicoDto: {
       /**
@@ -346,39 +346,39 @@ export interface components {
        * @description Descrição da foto
        * @example Foto do aniversário
        */
-      descricao?: string;
+      descricao: string;
       /**
        * Format: int32
        * @description Tamanho do arquivo da foto em KB
        * @example 500
        */
-      tamanho?: number;
+      tamanho: number;
       /**
        * @description Tipo da foto (por exemplo, 'jpg', 'png')
        * @example image/jpeg
        */
-      tipo?: string;
+      tipo: string;
       /**
        * Format: date
        * @description Data de upload da foto
        * @example 2025-02-11
        */
-      data?: string;
+      data: string;
       /**
        * @description Indica se a foto é principal
        * @example true
        */
-      principal?: boolean;
+      principal: boolean;
       /**
        * @description Hash único da foto
        * @example 3f96ad2b10594470833957b77ff420fedc794ef89d51c9bdef0e321bc301c0fc-1621948089453.jpg
        */
-      hash?: string;
+      hash: string;
       /**
        * @description Nome do bucket onde a foto está armazenada
        * @example abitus.foto-pessoa
        */
-      bucket?: string;
+      bucket: string;
     };
     /** @description Lista de contatos relacionados à ocorrência */
     OcorrenciaContatoDto: {
@@ -386,18 +386,18 @@ export interface components {
        * @description Nome completo do contato
        * @example João da Silva
        */
-      nome?: string;
+      nome: string;
       /**
        * @description Telefone de contato
        * @example (66)99989-5703
        */
-      telefone?: string;
+      telefone: string;
       /**
        * @description Grau de parentesco do contato
        * @example NETO_NETA
        * @enum {string}
        */
-      grauParentesco?:
+      grauParentesco:
         | 'AMIGO_AMIGA'
         | 'AVOS'
         | 'BISAVOS'
@@ -425,58 +425,58 @@ export interface components {
        * @description Descrição do relacionamento da pessoa
        * @example Possui boa relação com a família e amigos
        */
-      relacionamento?: string;
+      relacionamento: string;
       /**
        * @description Descrição de dívidas da pessoa
        * @example Dívidas de consumo e empréstimos pessoais
        */
-      dividas?: string;
+      dividas: string;
       /**
        * @description Descrição dos vícios da pessoa
        * @example Álcool e tabaco
        */
-      vicios?: string;
+      vicios: string;
       /**
        * @description Tipo de droga que a pessoa consome
        * @example Cocaína
        */
-      tipoDroga?: string;
+      tipoDroga: string;
       /**
        * @description Indica se a pessoa está em situação de rua
        * @example false
        */
-      situacaoRua?: boolean;
+      situacaoRua: boolean;
       /**
        * @description Descrição de desafetos da pessoa
        * @example Conflitos com ex-companheiro e vizinhos
        */
-      desafetos?: string;
+      desafetos: string;
       /**
        * @description Caso tenha desaparecido antes, descrição do evento
        * @example Desapareceu por 3 dias em 2022
        */
-      desapareceuAntes?: string;
+      desapareceuAntes: string;
       /**
        * @description Nome do melhor amigo da pessoa
        * @example Carlos Pereira
        */
-      melhorAmigo?: string;
+      melhorAmigo: string;
       /**
        * @description Facção com a qual a pessoa tem envolvimento
        * @example Nenhum envolvimento com facções
        */
-      faccao?: string;
+      faccao: string;
       /**
        * @description Observações adicionais sobre a pessoa
        * @example Pessoa com histórico de violência doméstica
        */
-      observacao?: string;
-      depressaoAnsiedadeOutrosProblemasMentais?: boolean;
-      comportamentoAutoDestrutivo?: boolean;
-      desentendimentoRecente?: boolean;
-      terminoRelacionamentoRecente?: boolean;
-      mudancaHumor?: boolean;
-      eventoMarcante?: boolean;
+      observacao: string;
+      depressaoAnsiedadeOutrosProblemasMentais: boolean;
+      comportamentoAutoDestrutivo: boolean;
+      desentendimentoRecente: boolean;
+      terminoRelacionamentoRecente: boolean;
+      mudancaHumor: boolean;
+      eventoMarcante: boolean;
     };
     /** @description Lista de entrevistas de desaparecimento */
     OcorrenciaEntrevistaDesaparecimentoDto: {
@@ -484,67 +484,67 @@ export interface components {
        * @description Descrição da vestimenta da pessoa desaparecida
        * @example Camisa branca e jeans
        */
-      vestimenta?: string;
+      vestimenta: string;
       /**
        * @description Descrição dos adereços usados pela pessoa desaparecida
        * @example Óculos escuros e relógio de pulso
        */
-      aderecos?: string;
+      aderecos: string;
       /**
        * @description Descrição da roupa usada pela pessoa desaparecida
        * @example Camiseta preta e calça jeans
        */
-      roupa?: string;
+      roupa: string;
       /**
        * @description Descrição dos sapatos usados pela pessoa desaparecida
        * @example Tênis branco
        */
-      sapatos?: string;
+      sapatos: string;
       /**
        * @description Descrição de acessórios usados pela pessoa desaparecida
        * @example Pulseira dourada e anel
        */
-      acessorios?: string;
+      acessorios: string;
       /**
        * @description Meio de transporte utilizado pela pessoa no momento do desaparecimento
        * @example Carro vermelho
        */
-      meioTransporte?: string;
+      meioTransporte: string;
       /**
        * @description Informações adicionais sobre o desaparecimento
        * @example A pessoa foi vista pela última vez em frente à sua casa.
        */
-      informacao?: string;
+      informacao: string;
       /**
        * @description Último local onde a pessoa foi vista
        * @example Praça Central, próximo à fonte
        */
-      ondeFoiVistoUltimaVez?: string;
+      ondeFoiVistoUltimaVez: string;
       /**
        * @description O que a pessoa estava fazendo no momento em que foi vista
        * @example Falando ao telefone e olhando em volta
        */
-      oqueEstavaFazendo?: string;
+      oqueEstavaFazendo: string;
       /**
        * @description Com quem a pessoa estava no momento
        * @example Um homem de boné azul e camiseta preta
        */
-      comQuemEstava?: string;
+      comQuemEstava: string;
       /**
        * @description Alguma situação incomum ou suspeita observada
        * @example Parecia nervoso e olhava frequentemente para trás
        */
-      incomumOuSuspeito?: string;
+      incomumOuSuspeito: string;
       /**
        * @description Condição climática no momento da observação
        * @example Nublado com chuviscos leves
        */
-      clima?: string;
+      clima: string;
       /**
        * @description Alguma particularidade do local onde foi visto
        * @example Havia uma feira acontecendo no local e muitas pessoas circulando
        */
-      particularidadeLocal?: string;
+      particularidadeLocal: string;
     };
     OcorrenciaIntegracaoDto: {
       protocolo?: string;
@@ -1056,8 +1056,8 @@ export interface components {
     };
     RedeSocialDto: {
       /** @enum {string} */
-      tipoRedeSocial?: 'INSTA' | 'FACE' | 'LINKEDIN' | 'TWITTER' | 'OUTROS';
-      url?: string;
+      tipoRedeSocial: 'INSTA' | 'FACE' | 'LINKEDIN' | 'TWITTER' | 'OUTROS';
+      url: string;
     };
     TelefoneDto: {
       /**
@@ -1089,9 +1089,9 @@ export interface components {
       password: string;
     };
     OcorrenciaCartazDTO: {
-      urlCartaz?: string;
+      urlCartaz: string;
       /** @enum {string} */
-      tipoCartaz?:
+      tipoCartaz:
         | 'PDF_DESAPARECIDO'
         | 'PDF_LOCALIZADO'
         | 'JPG_DESAPARECIDO'
@@ -1101,76 +1101,76 @@ export interface components {
     };
     OcorrenciaDTO: {
       /** Format: date-time */
-      dtDesaparecimento?: string;
+      dtDesaparecimento: string;
       /** Format: date */
-      dataLocalizacao?: string;
-      encontradoVivo?: boolean;
-      localDesaparecimentoConcat?: string;
-      ocorrenciaEntrevDesapDTO?: components['schemas']['OcorrenciaEntrevDesapDTO'];
-      listaCartaz?: components['schemas']['OcorrenciaCartazDTO'][];
+      dataLocalizacao: string;
+      encontradoVivo: boolean;
+      localDesaparecimentoConcat: string;
+      ocorrenciaEntrevDesapDTO: components['schemas']['OcorrenciaEntrevDesapDTO'];
+      listaCartaz: components['schemas']['OcorrenciaCartazDTO'][];
       /** Format: int64 */
-      ocoId?: number;
+      ocoId: number;
     };
     OcorrenciaEntrevDesapDTO: {
-      informacao?: string;
-      vestimentasDesaparecido?: string;
+      informacao: string;
+      vestimentasDesaparecido: string;
     };
     PessoaDTO: {
       /** Format: int64 */
-      id?: number;
-      nome?: string;
+      id: number;
+      nome: string;
       /** Format: int32 */
-      idade?: number;
+      idade: number;
       /** @enum {string} */
-      sexo?: 'MASCULINO' | 'FEMININO';
-      vivo?: boolean;
-      urlFoto?: string;
-      ultimaOcorrencia?: components['schemas']['OcorrenciaDTO'];
+      sexo: 'MASCULINO' | 'FEMININO';
+      vivo: boolean;
+      urlFoto: string;
+      ultimaOcorrencia: components['schemas']['OcorrenciaDTO'];
     };
     PagePessoaDTO: {
       /** Format: int64 */
-      totalElements?: number;
+      totalElements: number;
       /** Format: int32 */
-      totalPages?: number;
-      pageable?: components['schemas']['PageableObject'];
+      totalPages: number;
+      pageable: components['schemas']['PageableObject'];
       /** Format: int32 */
-      numberOfElements?: number;
-      first?: boolean;
-      last?: boolean;
+      numberOfElements: number;
+      first: boolean;
+      last: boolean;
       /** Format: int32 */
-      size?: number;
-      content?: components['schemas']['PessoaDTO'][];
+      size: number;
+      content: components['schemas']['PessoaDTO'][];
       /** Format: int32 */
-      number?: number;
-      sort?: components['schemas']['SortObject'];
-      empty?: boolean;
+      number: number;
+      sort: components['schemas']['SortObject'];
+      empty: boolean;
     };
     PageableObject: {
-      unpaged?: boolean;
+      unpaged: boolean;
       /** Format: int32 */
-      pageNumber?: number;
-      paged?: boolean;
+      pageNumber: number;
+      paged: boolean;
       /** Format: int32 */
-      pageSize?: number;
+      pageSize: number;
       /** Format: int64 */
-      offset?: number;
-      sort?: components['schemas']['SortObject'];
+      offset: number;
+      sort: components['schemas']['SortObject'];
     };
     SortObject: {
-      unsorted?: boolean;
-      sorted?: boolean;
-      empty?: boolean;
+      unsorted: boolean;
+      sorted: boolean;
+      empty: boolean;
     };
     EstatisticaPessoaDTO: {
       /** Format: int64 */
-      quantPessoasDesaparecidas?: number;
+      quantPessoasDesaparecidas: number;
       /** Format: int64 */
-      quantPessoasEncontradas?: number;
+      quantPessoasEncontradas: number;
     };
     MotivoDto: {
       /** Format: int64 */
-      id?: number;
-      descricao?: string;
+      id: number;
+      descricao: string;
     };
   };
   responses: never;
@@ -1252,7 +1252,7 @@ export interface operations {
     requestBody?: {
       content: {
         'multipart/form-data': {
-          files?: string[];
+          files: string[];
         };
       };
     };

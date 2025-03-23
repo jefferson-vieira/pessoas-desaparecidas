@@ -9,10 +9,11 @@
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "prepare": "husky",
-    "generate:api": "npx openapi-typescript https://abitus-api.geia.vip/v3/api-docs -o src/@types/api.d.ts",
+    "generate:api": "npx openapi-typescript https://abitus-api.geia.vip/v3/api-docs -o src/@types/api.d.ts --properties-required-by-default",
     "test:ts": "tsc --noEmit"
   },
   "dependencies": {
+    "@radix-ui/react-slot": "^1.1.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.483.0",

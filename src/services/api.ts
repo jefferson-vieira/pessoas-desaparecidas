@@ -10,8 +10,14 @@ const client = createClient<paths>({
   baseUrl: API_URL,
 });
 
-export async function getPeople() {
-  const { data, error } = await client.GET('/v1/pessoas/aberto/filtro', {});
+export async function getPeople(
+  params: paths['/v1/pessoas/aberto/filtro']['get']['parameters']['query'],
+) {
+  const { data, error } = await client.GET('/v1/pessoas/aberto/filtro', {
+    params: {
+      query: params,
+    },
+  });
 
   if (error) {
     throw new Error();
