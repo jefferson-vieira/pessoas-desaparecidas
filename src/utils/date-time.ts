@@ -1,12 +1,20 @@
-const formatter = new Intl.DateTimeFormat(navigator.language, {
+const dateFormatter = new Intl.DateTimeFormat(navigator.language, {
+  dateStyle: 'short',
+});
+
+const dateTimeFormatter = new Intl.DateTimeFormat(navigator.language, {
   dateStyle: 'short',
   timeStyle: 'short',
 });
+
+export function formatDate(date: string) {
+  return dateFormatter.format(new Date(date));
+}
 
 export function formatDateTime(dateTime?: string) {
   if (!dateTime) {
     return null;
   }
 
-  return formatter.format(new Date(dateTime));
+  return dateTimeFormatter.format(new Date(dateTime));
 }
