@@ -25,3 +25,19 @@ export async function getPeople(
 
   return data;
 }
+
+export async function getPerson(id: number) {
+  if (isNaN(id)) {
+    return null;
+  }
+
+  const { data } = await client.GET('/v1/pessoas/{id}', {
+    params: {
+      path: {
+        id,
+      },
+    },
+  });
+
+  return data;
+}
