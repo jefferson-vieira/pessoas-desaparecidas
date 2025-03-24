@@ -2,9 +2,9 @@ import { Card, CardContent } from '@/components/ui/card';
 
 import { components } from '@/@types/api';
 
-import { fallbackInfo } from './utils';
 import { formatDateTime } from '@/utils/date-time';
 import Image from '@/components/Image';
+import fallbackInfo from '../helpers/fallback-info';
 
 type Props = {
   person: components['schemas']['PessoaDTO'];
