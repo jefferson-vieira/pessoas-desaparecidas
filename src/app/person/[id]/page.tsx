@@ -3,6 +3,7 @@ import fallbackInfo from '@/helpers/fallback-info';
 import { getPerson } from '@/services/api';
 import { formatDateTime } from '@/utils/date-time';
 import { notFound } from 'next/navigation';
+import ReportDialog from '@/components/ReportDialog';
 
 type Props = {
   params: Promise<{
@@ -27,6 +28,7 @@ export default async function PersonPage({ params }: Props) {
     ocorrenciaEntrevDesapDTO,
     dataLocalizacao,
     encontradoVivo,
+    ocoId,
   } = ultimaOcorrencia || {};
 
   const { informacao, vestimentasDesaparecido } =
@@ -92,6 +94,8 @@ export default async function PersonPage({ params }: Props) {
 
           <p>{fallbackInfo(informacao, 'Sem mais informações.')}</p>
         </div>
+
+        <ReportDialog ocoId={ocoId} />
       </div>
     </section>
   );

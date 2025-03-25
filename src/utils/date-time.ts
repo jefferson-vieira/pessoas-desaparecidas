@@ -7,6 +7,10 @@ const dateTimeFormatter = new Intl.DateTimeFormat(navigator.language, {
   timeStyle: 'short',
 });
 
+export function getISODate(date: Date) {
+  return date.toISOString().split('T')[0] as string;
+}
+
 export function formatDate(date: string) {
   return dateFormatter.format(new Date(date));
 }

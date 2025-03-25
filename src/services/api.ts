@@ -4,6 +4,9 @@ import createClient from 'openapi-fetch';
 
 import type { paths } from '@/@types/api';
 
+import type { CreateReportRequest } from './api.types';
+import { getISODate } from '@/utils/date-time';
+
 const { API_URL } = env;
 
 const client = createClient<paths>({
@@ -40,4 +43,40 @@ export async function getPerson(id: number) {
   });
 
   return data;
+}
+
+export async function createReport({
+  date,
+  description,
+  info,
+  ocoId,
+  pictures,
+}: CreateReportRequest) {
+  await client.POST('/v1/ocorrencias/informacoes-desaparecido', {
+    params: {
+      query: {
+        data: getISODate(date),
+        descricao: description,
+        informacao: info,
+        ocoId,
+      },
+    },
+    body: {
+      // @ts-expect-error see https://github.com/openapi-ts/openapi-typescript/issues/1214
+      files: pictures,
+    },
+    bodySerializer() {
+      if (!pictures) {
+        return;
+      }
+
+      const body = new FormData();
+
+      for (const file of pictures) {
+        body.append('files', file);
+      }
+
+      return body;
+    },
+  });
 }
