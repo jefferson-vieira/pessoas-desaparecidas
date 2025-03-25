@@ -44,12 +44,17 @@ export default function DatePickerInput<
               <FormControl>
                 <Button
                   variant="outline"
-                  className={cn(!field.value && 'text-muted-foreground')}
+                  className={cn(
+                    'overflow-hidden',
+                    !field.value && 'text-muted-foreground',
+                  )}
                 >
                   {field.value ? (
                     formatDate(field.value)
                   ) : (
-                    <span>{placeholder}</span>
+                    <span className="overflow-hidden text-ellipsis">
+                      {placeholder}
+                    </span>
                   )}
 
                   <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
