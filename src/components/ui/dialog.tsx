@@ -6,10 +6,26 @@ import { XIcon } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 
-function Dialog({
-  ...props
-}: React.ComponentProps<typeof DialogPrimitive.Root>) {
-  return <DialogPrimitive.Root data-slot="dialog" {...props} />;
+type DialogProps = {
+  preventClose?: boolean;
+} & React.ComponentProps<typeof DialogPrimitive.Root>;
+
+function Dialog({ preventClose, onOpenChange, ...props }: DialogProps) {
+  function handleOpenChange(open: boolean) {
+    if (preventClose) {
+      return;
+    }
+
+    onOpenChange?.(open);
+  }
+
+  return (
+    <DialogPrimitive.Root
+      data-slot="dialog"
+      {...props}
+      onOpenChange={handleOpenChange}
+    />
+  );
 }
 
 function DialogTrigger({
