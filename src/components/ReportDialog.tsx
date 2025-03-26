@@ -26,6 +26,9 @@ import DatePickerInput from '@/components/DatePickerInput';
 import { Input } from '@/components/ui/input';
 import { createReport } from '@/services/api';
 import { components } from '@/@types/api';
+import { useMutation } from '@tanstack/react-query';
+import { toast } from 'sonner';
+import { useState } from 'react';
 
 const TITLE = 'Relatar informações';
 const SUBTITLE = 'Relate informações sobre o desaparecimento';
@@ -41,18 +44,36 @@ type FormSchema = z.infer<typeof formSchema>;
 type Props = Pick<components['schemas']['OcorrenciaDTO'], 'ocoId'>;
 
 export default function ReportDialog({ ocoId }: Props) {
+  const [open, setOpen] = useState(false);
+
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
   });
 
-  function clearForm() {
-    form.reset();
+  const { mutate, isPending } = useMutation({
+    mutationFn: createReport,
+    onError: () => {
+      toast.error(
+        'Não foi possível registrar as informações. Por favor, tente novamente.',
+      );
+    },
+    onSuccess: () => {
+      toast.success('Informações registradas com sucesso!');
+
+      handleOpenChange(false);
+    },
+  });
+
+  function handleOpenChange(open: boolean) {
+    if (!open) {
+      form.reset();
+    }
+
+    setOpen(open);
   }
 
-  function onSubmit(data: FormSchema) {
-    console.log('data', data);
-
-    createReport({
+  function handleSubmit(data: FormSchema) {
+    mutate({
       ...data,
       description: 'Fotos',
       ocoId,
@@ -60,7 +81,11 @@ export default function ReportDialog({ ocoId }: Props) {
   }
 
   return (
-    <Dialog onOpenChange={clearForm}>
+    <Dialog
+      open={open}
+      preventClose={isPending}
+      onOpenChange={handleOpenChange}
+    >
       <DialogTrigger asChild>
         <Button className="md:self-start" title={SUBTITLE}>
           {TITLE}
@@ -68,7 +93,7 @@ export default function ReportDialog({ ocoId }: Props) {
       </DialogTrigger>
 
       <DialogContent>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
+        <form onSubmit={form.handleSubmit(handleSubmit)}>
           <DialogHeader>
             <DialogTitle>{TITLE}</DialogTitle>
 
@@ -127,12 +152,16 @@ export default function ReportDialog({ ocoId }: Props) {
 
           <DialogFooter>
             <DialogClose asChild>
-              <Button type="button" variant="secondary">
+              <Button disabled={isPending} type="button" variant="secondary">
                 Cancelar
               </Button>
             </DialogClose>
 
-            <Button type="submit" disabled={!form.formState.isValid}>
+            <Button
+              type="submit"
+              disabled={!form.formState.isValid}
+              loading={isPending}
+            >
               Enviar
             </Button>
           </DialogFooter>

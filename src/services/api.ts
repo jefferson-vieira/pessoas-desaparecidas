@@ -52,31 +52,36 @@ export async function createReport({
   ocoId,
   pictures,
 }: CreateReportRequest) {
-  await client.POST('/v1/ocorrencias/informacoes-desaparecido', {
-    params: {
-      query: {
-        data: getISODate(date),
-        descricao: description,
-        informacao: info,
-        ocoId,
+  const { error } = await client.POST(
+    '/v1/ocorrencias/informacoes-desaparecido',
+    {
+      params: {
+        query: {
+          data: getISODate(date),
+          descricao: description,
+          informacao: info,
+          ocoId,
+        },
+      },
+      body: {
+        // @ts-expect-error see https://github.com/openapi-ts/openapi-typescript/issues/1214
+        files: pictures,
+      },
+      bodySerializer() {
+        const body = new FormData();
+
+        if (pictures) {
+          for (const file of pictures) {
+            body.append('files', file);
+          }
+        }
+
+        return body;
       },
     },
-    body: {
-      // @ts-expect-error see https://github.com/openapi-ts/openapi-typescript/issues/1214
-      files: pictures,
-    },
-    bodySerializer() {
-      if (!pictures) {
-        return;
-      }
+  );
 
-      const body = new FormData();
-
-      for (const file of pictures) {
-        body.append('files', file);
-      }
-
-      return body;
-    },
-  });
+  if (error) {
+    throw new Error();
+  }
 }
