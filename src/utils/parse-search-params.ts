@@ -3,7 +3,7 @@ export default function parseSearchParams<
 >(data: T) {
   return new URLSearchParams(
     Object.entries(data)
-      .filter(([, value]) => value !== null)
+      .filter(([, value]) => value)
       .map(([key, value]) => [key, String(value)]),
   );
 }

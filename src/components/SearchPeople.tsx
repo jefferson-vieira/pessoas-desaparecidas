@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { SearchIcon, Trash } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -33,11 +33,11 @@ const STATUS = ['DESAPARECIDO', 'LOCALIZADO'] as const;
 
 const formSchema = z
   .object({
-    name: z.string().trim().nullable(),
-    sex: z.enum(SEX).nullable(),
-    status: z.enum(STATUS).nullable(),
-    minAge: z.number().int().min(MIN_AGE_IN_YEARS).nullable(),
-    maxAge: z.number().int().min(MIN_AGE_IN_YEARS).nullable(),
+    name: z.string().trim().nullish(),
+    sex: z.enum(SEX).nullish(),
+    status: z.enum(STATUS).nullish(),
+    minAge: z.coerce.number().int().min(MIN_AGE_IN_YEARS).nullish(),
+    maxAge: z.coerce.number().int().min(MIN_AGE_IN_YEARS).nullish(),
   })
   .refine(
     ({ maxAge, minAge }) => !(maxAge && minAge && maxAge <= minAge),
@@ -52,6 +52,8 @@ type FormSchema = z.infer<typeof formSchema>;
 export default function SearchPeople() {
   const router = useRouter();
 
+  const searchParams = useSearchParams();
+
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -61,6 +63,10 @@ export default function SearchPeople() {
       sex: null,
       status: null,
     },
+    resetOptions: {
+      keepDefaultValues: true,
+    },
+    values: Object.fromEntries(searchParams),
   });
 
   function handleClear() {
@@ -95,26 +101,22 @@ export default function SearchPeople() {
               <FormField
                 control={form.control}
                 name="name"
-                render={({ field: { value, ...field } }) => (
+                render={({ field }) => (
                   <FormItem className="flex-1">
                     <FormLabel>Nome:</FormLabel>
 
                     <FormControl>
-                      <Input
-                        placeholder="ex.: Fulano da Silva"
-                        value={value || ''}
-                        {...field}
-                      />
+                      <Input placeholder="ex.: Fulano da Silva" {...field} />
                     </FormControl>
                   </FormItem>
                 )}
               />
 
-              <div className="flex flex-wrap gap-6">
+              <div className="flex flex-wrap items-start gap-6">
                 <FormField
                   control={form.control}
                   name="minAge"
-                  render={({ field: { value, onChange, ...field } }) => (
+                  render={({ field: { onChange, ...field } }) => (
                     <FormItem className="flex-1">
                       <FormLabel className="whitespace-nowrap">
                         Idade mínima:
@@ -126,10 +128,7 @@ export default function SearchPeople() {
                           placeholder="Anos"
                           min={1}
                           step="1"
-                          value={value || ''}
-                          onChange={({ target: { value } }) =>
-                            onChange(+value || null)
-                          }
+                          onChange={(e) => onChange(e.target.value || null)}
                           {...field}
                         />
                       </FormControl>
@@ -140,7 +139,7 @@ export default function SearchPeople() {
                 <FormField
                   control={form.control}
                   name="maxAge"
-                  render={({ field: { value, onChange, ...field } }) => (
+                  render={({ field: { onChange, ...field } }) => (
                     <FormItem className="flex-1">
                       <FormLabel className="whitespace-nowrap">
                         Idade máxima:
@@ -152,10 +151,7 @@ export default function SearchPeople() {
                           placeholder="Anos"
                           min={1}
                           step="1"
-                          value={value || ''}
-                          onChange={({ target: { value } }) =>
-                            onChange(+value || null)
-                          }
+                          onChange={(e) => onChange(e.target.value || null)}
                           {...field}
                         />
                       </FormControl>
@@ -175,7 +171,7 @@ export default function SearchPeople() {
                       <FormControl>
                         <RadioGroup
                           onValueChange={field.onChange}
-                          value={field.value || ''}
+                          value={field.value}
                           className="flex"
                         >
                           {SEX.map((sex) => (
@@ -203,7 +199,7 @@ export default function SearchPeople() {
                       <FormControl>
                         <RadioGroup
                           onValueChange={field.onChange}
-                          value={field.value || ''}
+                          value={field.value}
                           className="flex"
                         >
                           {STATUS.map((status) => (
@@ -236,11 +232,7 @@ export default function SearchPeople() {
                   <Trash /> Limpar
                 </Button>
 
-                <Button
-                  type="submit"
-                  disabled={!form.formState.isDirty}
-                  title="Filtrar pessoas"
-                >
+                <Button type="submit" title="Buscar pessoas">
                   <SearchIcon /> Buscar
                 </Button>
               </div>
