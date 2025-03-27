@@ -2,7 +2,11 @@ import * as React from 'react';
 
 import { cn } from '@/lib/utils';
 
-function Input({ className, type, ...props }: React.ComponentProps<'input'>) {
+type Props = Omit<React.ComponentProps<'input'>, 'value'> & {
+  value?: React.ComponentProps<'input'>['value'] | null;
+};
+
+function Input({ className, type, value, ...props }: Props) {
   return (
     <input
       type={type}
@@ -13,6 +17,7 @@ function Input({ className, type, ...props }: React.ComponentProps<'input'>) {
         'aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive',
         className,
       )}
+      value={value ?? ''}
       {...props}
     />
   );

@@ -6,14 +6,19 @@ import { CircleIcon } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 
-function RadioGroup({
-  className,
-  ...props
-}: React.ComponentProps<typeof RadioGroupPrimitive.Root>) {
+type RadioGroupProps = Omit<
+  React.ComponentProps<typeof RadioGroupPrimitive.Root>,
+  'value'
+> & {
+  value?: React.ComponentProps<typeof RadioGroupPrimitive.Root>['value'] | null;
+};
+
+function RadioGroup({ className, value, ...props }: RadioGroupProps) {
   return (
     <RadioGroupPrimitive.Root
       data-slot="radio-group"
       className={cn('grid gap-3', className)}
+      value={value ?? ''}
       {...props}
     />
   );
