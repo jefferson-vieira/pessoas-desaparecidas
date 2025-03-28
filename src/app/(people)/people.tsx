@@ -3,6 +3,7 @@ import PersonCard from '@/components/PersonCard';
 
 import Pagination from '@/components/Pagination';
 import { API_FIRST_PAGE, API_PER_PAGE } from '@/config/constants';
+import ErrorFeedback from '@/components/ErrorFeedback';
 import type { SearchParams } from './types';
 
 type Props = SearchParams;
@@ -14,7 +15,7 @@ export default async function People(props: Props) {
   const minAge = props.minAge ? Number(props.minAge) : undefined;
   const page = Number(props.page) || API_FIRST_PAGE;
 
-  const { content, first, last } = await getPeople({
+  const { data, error } = await getPeople({
     faixaIdadeFinal: maxAge,
     faixaIdadeInicial: minAge,
     nome: name,
@@ -24,10 +25,16 @@ export default async function People(props: Props) {
     status,
   });
 
+  if (error) {
+    return <ErrorFeedback />;
+  }
+
+  const { content, first, last } = data;
+
   return (
     <>
       <section className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {content?.map((person) => (
+        {content.map((person) => (
           <PersonCard key={person.id} person={person} />
         ))}
       </section>
