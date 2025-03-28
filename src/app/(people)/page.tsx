@@ -16,7 +16,7 @@ type Props = {
   }>;
 };
 
-export default async function Home(props: Props) {
+export default async function PeoplePage(props: Props) {
   const searchParams = await props.searchParams;
 
   const { name, sex, status } = searchParams;
