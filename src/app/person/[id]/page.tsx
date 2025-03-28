@@ -4,6 +4,7 @@ import { getPerson } from '@/services/api';
 import { formatDateTime } from '@/utils/date-time';
 import { notFound } from 'next/navigation';
 import ReportDialog from '@/components/ReportDialog';
+import ErrorFeedback from '@/components/ErrorFeedback';
 
 type Props = {
   params: Promise<{
@@ -11,16 +12,26 @@ type Props = {
   }>;
 };
 
-export default async function PersonPage({ params }: Props) {
-  const { id } = await params;
+export default async function PersonPage(props: Props) {
+  const params = await props.params;
 
-  const person = await getPerson(Number(id));
+  const id = Number(params.id);
 
-  if (!person) {
+  if (isNaN(id)) {
     notFound();
   }
 
-  const { idade, nome, sexo, ultimaOcorrencia, urlFoto, vivo } = person;
+  const { data, error } = await getPerson(id);
+
+  if (error) {
+    return <ErrorFeedback />;
+  }
+
+  if (!data) {
+    notFound();
+  }
+
+  const { idade, nome, sexo, ultimaOcorrencia, urlFoto, vivo } = data;
 
   const {
     dtDesaparecimento,
@@ -37,7 +48,7 @@ export default async function PersonPage({ params }: Props) {
   const isAlive = (dataLocalizacao && encontradoVivo) || vivo;
 
   return (
-    <section className="grid md:grid-cols-2">
+    <section className="grid gap-6 md:grid-cols-2">
       <Image
         alt={`Foto de ${nome}`}
         fill

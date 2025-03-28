@@ -6,6 +6,8 @@ import type { paths } from '@/@types/api';
 
 import type { CreateReportRequest } from './api.types';
 import { getISODate } from '@/utils/date-time';
+import { HTTP_STATUS_NOT_FOUND } from '@/config/constants';
+import type { ApiError } from '@/@types/api-error';
 
 const { API_URL } = env;
 
@@ -24,11 +26,7 @@ export function getPeople(
 }
 
 export async function getPerson(id: number) {
-  if (isNaN(id)) {
-    return null;
-  }
-
-  const { data } = await client.GET('/v1/pessoas/{id}', {
+  const response = await client.GET('/v1/pessoas/{id}', {
     params: {
       path: {
         id,
@@ -36,7 +34,16 @@ export async function getPerson(id: number) {
     },
   });
 
-  return data;
+  if (
+    (response.error as unknown as ApiError)?.status === HTTP_STATUS_NOT_FOUND
+  ) {
+    return {
+      data: null,
+      error: null,
+    };
+  }
+
+  return response;
 }
 
 export async function createReport({

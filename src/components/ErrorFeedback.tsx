@@ -18,6 +18,10 @@ export default function ErrorFeedback() {
         <AlertDescription>
           Um erro inesperado ocorreu. Por favor, tente novamente.
         </AlertDescription>
+
+        <AlertDescription>
+          Se o problema persistir, por favor, tente novamente mais tarde.
+        </AlertDescription>
       </Alert>
 
       <Button onClick={() => router.refresh()}>Tentar novamente</Button>
