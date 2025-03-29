@@ -6,6 +6,7 @@ import { formatDateTime } from '@/utils/date-time';
 import Image from '@/components/Image';
 import Link from 'next/link';
 import fallbackInfo from '@/helpers/fallback-info';
+import { cn } from '@/lib/utils';
 
 type Props = {
   person: components['schemas']['PessoaDTO'];
@@ -15,6 +16,7 @@ export default function PersonCard({ person }: Props) {
   const { id, idade, nome, sexo, ultimaOcorrencia, urlFoto, vivo } = person;
 
   const {
+    dataLocalizacao,
     dtDesaparecimento,
     localDesaparecimentoConcat,
     ocorrenciaEntrevDesapDTO,
@@ -26,20 +28,34 @@ export default function PersonCard({ person }: Props) {
   return (
     <Link
       href={`/person/${id}`}
+      title="Clique para mais informações"
       className="rounded-xl duration-200 hover:scale-105 hover:shadow-2xl"
     >
-      <Card className="size-full">
-        <CardContent>
+      <Card
+        className={cn(
+          'size-full',
+          dataLocalizacao ? 'border-green-500' : 'border-red-500',
+        )}
+      >
+        <CardContent className="space-y-6">
           <Image
             alt={`Foto de ${nome}`}
             fill
-            className="rounded-2xl object-cover"
+            className="rounded-xl object-cover"
             src={urlFoto}
             fallback="/img/user-x.svg"
           />
 
-          <div className="flex flex-col gap-3 p-2">
-            <div className="flex flex-col gap-1">
+          <div className="space-y-3">
+            <h2 className="font-semibold uppercase">
+              {dataLocalizacao ? (
+                <span className="text-green-500">Localizado</span>
+              ) : (
+                <span className="text-red-500">Desaparecido</span>
+              )}
+            </h2>
+
+            <div className="space-y-1">
               <h2 className="font-semibold">{nome}</h2>
 
               <p className="text-sm">
@@ -56,7 +72,7 @@ export default function PersonCard({ person }: Props) {
               </p>
             </div>
 
-            <div className="flex flex-col gap-1">
+            <div className="space-y-1">
               <h3 className="font-semibold">Desaparecimento</h3>
 
               <p className="text-sm">
