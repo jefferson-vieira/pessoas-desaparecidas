@@ -1,7 +1,7 @@
 import Image from '@/components/Image';
 import fallbackInfo from '@/helpers/fallback-info';
 import { getPerson } from '@/services/api';
-import { formatDateTime } from '@/utils/date-time';
+import { formatDate, formatDateTime } from '@/utils/date-time';
 import { notFound } from 'next/navigation';
 import ReportDialog from '@/components/ReportDialog';
 import ErrorFeedback from '@/components/ErrorFeedback';
@@ -63,7 +63,9 @@ export default async function PersonPage(props: Props) {
 
           <h2 className="text-3xl font-semibold uppercase">
             {dataLocalizacao ? (
-              <span className="text-green-500">Localizado</span>
+              <span className="text-green-500">
+                Localizado - {formatDate(dataLocalizacao)}
+              </span>
             ) : (
               <span className="text-red-500">Desaparecido</span>
             )}
