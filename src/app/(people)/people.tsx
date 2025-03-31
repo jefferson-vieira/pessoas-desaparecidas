@@ -5,6 +5,7 @@ import Pagination from '@/components/Pagination';
 import { API_FIRST_PAGE, API_PER_PAGE } from '@/config/constants';
 import ErrorFeedback from '@/components/ErrorFeedback';
 import type { SearchParams } from './types';
+import EmptyResultsFeedback from '@/components/EmptyResultsFeedback';
 
 type Props = SearchParams;
 
@@ -30,6 +31,10 @@ export default async function People(props: Props) {
   }
 
   const { content, first, last } = data;
+
+  if (!content.length) {
+    return <EmptyResultsFeedback />;
+  }
 
   return (
     <>
