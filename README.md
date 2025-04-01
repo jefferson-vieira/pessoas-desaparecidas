@@ -127,6 +127,7 @@ ou
 
 - Dados da API requisitados em tempo real
 - Layout responsivo
+- Seletor de tema claro/escuro
 - Lazy Loading Routes
 - Lista de desaparecidos ou localizados conforme a situação em cards, contendo imagem e informações sobre o caso
 - Lista paginada, exibindo 12 pessoas por vez

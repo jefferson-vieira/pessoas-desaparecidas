@@ -1,5 +1,7 @@
 'use client';
 
+import type { ThemeProviderProps } from 'next-themes';
+import { ThemeProvider } from 'next-themes';
 import {
   isServer,
   QueryClient,
@@ -27,12 +29,14 @@ function getQueryClient() {
 
 type Props = {
   children: ReactNode;
-};
+} & ThemeProviderProps;
 
-export default function Providers({ children }: Props) {
+export default function Providers({ children, ...props }: Props) {
   const queryClient = getQueryClient();
 
   return (
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    <ThemeProvider {...props}>
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    </ThemeProvider>
   );
 }

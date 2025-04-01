@@ -29,19 +29,24 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR">
+    <html lang="pt-BR" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} flex flex-col antialiased`}
       >
-        <Header />
+        <Providers
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Header />
 
-        <main className="container mx-auto p-6">
-          <Providers>{children}</Providers>
-        </main>
+          <main className="container mx-auto p-6">{children}</main>
 
-        <Toaster richColors />
+          <Toaster richColors />
 
-        <Footer />
+          <Footer />
+        </Providers>
       </body>
     </html>
   );
