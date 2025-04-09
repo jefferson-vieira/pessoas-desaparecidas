@@ -11,14 +11,16 @@ import type { ApiError } from '@/@types/api-error';
 
 const { API_URL } = env;
 
-const client = createClient<paths>({
-  baseUrl: API_URL,
-});
+const getClient = () => {
+  return createClient<paths>({
+    baseUrl: API_URL,
+  });
+};
 
 export function getPeople(
   params: paths['/v1/pessoas/aberto/filtro']['get']['parameters']['query'],
 ) {
-  return client.GET('/v1/pessoas/aberto/filtro', {
+  return getClient().GET('/v1/pessoas/aberto/filtro', {
     params: {
       query: params,
     },
@@ -26,7 +28,7 @@ export function getPeople(
 }
 
 export async function getPerson(id: number) {
-  const response = await client.GET('/v1/pessoas/{id}', {
+  const response = await getClient().GET('/v1/pessoas/{id}', {
     params: {
       path: {
         id,
@@ -53,7 +55,7 @@ export async function createReport({
   ocoId,
   pictures,
 }: CreateReportRequest) {
-  const { error } = await client.POST(
+  const { error } = await getClient().POST(
     '/v1/ocorrencias/informacoes-desaparecido',
     {
       params: {
