@@ -20,6 +20,8 @@ https://pessoas-desaparecidas-snowy.vercel.app/
 Principais tecnologias e ferramentas:
 
 - [ESLint](https://eslint.org/)
+- [Jest](https://jestjs.io/)
+- [MSW](https://mswjs.io/)
 - [Next.js](https://nextjs.org/)
 - [OpenAPI TypeScript](https://openapi-ts.dev/)
 - [Prettier](https://prettier.io/)
@@ -28,6 +30,7 @@ Principais tecnologias e ferramentas:
 - [Shadcn](https://ui.shadcn.com/)
 - [TailwindCSS](https://tailwindcss.com/)
 - [TanStack Query](https://tanstack.com/query/latest)
+- [Testing Library](https://testing-library.com/)
 - [Typescript](https://www.typescriptlang.org/)
 - [Zod](https://zod.dev/)
 
@@ -168,6 +171,14 @@ Para rodar as validações do Typescript rode:
 
 ```bash
   npm run test:ts
+```
+
+## Rodando os testes
+
+Para rodar os testes, rode o seguinte comando:
+
+```bash
+  npm run test
 ```
 
 ## Feedback
