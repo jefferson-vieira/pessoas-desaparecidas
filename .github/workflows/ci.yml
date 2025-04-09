@@ -28,7 +28,9 @@ jobs:
         run: npm run test:ts
 
       - name: Testes
-        run: exit 0
+        env:
+          NEXT_PUBLIC_API_URL: http://localhost
+        run: npm run test
 
       - name: Build
         env:

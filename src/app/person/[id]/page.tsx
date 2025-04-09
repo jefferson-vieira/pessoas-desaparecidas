@@ -5,11 +5,10 @@ import { formatDate, formatDateTime } from '@/utils/date-time';
 import { notFound } from 'next/navigation';
 import ReportDialog from '@/components/ReportDialog';
 import ErrorFeedback from '@/components/ErrorFeedback';
+import type { Params } from './types';
 
 type Props = {
-  params: Promise<{
-    id: string;
-  }>;
+  params: Params;
 };
 
 export default async function PersonPage(props: Props) {
