@@ -25,13 +25,14 @@ type Props<
   TName extends FieldPath<TFieldValues>,
 > = {
   label: string;
+  maxDate: Date;
   placeholder: string;
 } & Omit<ControllerProps<TFieldValues, TName>, 'render'>;
 
 export default function DatePickerInput<
   TFieldValues extends FieldValues,
   TName extends FieldPath<TFieldValues>,
->({ label, placeholder, ...props }: Props<TFieldValues, TName>) {
+>({ label, maxDate, placeholder, ...props }: Props<TFieldValues, TName>) {
   return (
     <FormField
       {...props}
@@ -64,6 +65,9 @@ export default function DatePickerInput<
 
             <PopoverContent className="w-auto p-0" align="start">
               <Calendar
+                disabled={{
+                  after: maxDate,
+                }}
                 mode="single"
                 selected={field.value}
                 onSelect={field.onChange}

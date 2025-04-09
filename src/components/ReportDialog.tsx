@@ -33,6 +33,8 @@ import { useState } from 'react';
 const TITLE = 'Relatar informações';
 const SUBTITLE = 'Relate informações sobre o desaparecimento';
 
+const today = new Date();
+
 const formSchema = z.object({
   info: z.string().trim().nonempty(),
   date: z.date(),
@@ -121,6 +123,7 @@ export default function ReportDialog({ ocoId }: Props) {
 
               <DatePickerInput
                 control={form.control}
+                maxDate={today}
                 name="date"
                 label="Data:"
                 placeholder="Data da visualização da pessoa"
